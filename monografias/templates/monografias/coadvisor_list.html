@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="../../static/css/style.css" />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Listagem de Co Orientadores</h1>
+    <a href="/create-co-advisor">
+      <button>Cadastrar novo Co Orientador</button>
+    </a>
+    <ul>
+      {% for co_advisor in object_list %}
+      <li>
+        {{ co_advisor.name }} -
+        <a href="{% url 'edit-coadvisor' pk=co_advisor.id %}"
+          >EDITAR CO ORIENTADOR</a
+        >
+        |
+        <a href="{% url 'delete-coadvisor' pk=co_advisor.id %}"
+          >DELETAR CO ORIENTADOR</a
+        >
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

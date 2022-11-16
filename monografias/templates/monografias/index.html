@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../static/css/style.css" />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="searchIndex">
+
+    <form action="{% url 'index' %}" method="post">
+      {% csrf_token %}
+      <div class="header">
+      <!-- <a class="textHeader" href="/create-advisor">ORIENTADORES</a>  -->
+      <a class="textHeader" href="/view-advisor">ORIENTADORES</a> 
+      <a class="textHeader" href="/view-coadvisor">CO ORIENTADORES</a> 
+      <a class="textHeader" href="/view-authors">AUTORES</a> 
+      <a class="textHeader" href="/view-monography">MONOGRAFIAS</a> 
+    </div>
+
+    </br>
+      <div class="inputSearch">
+      <input
+        class="input-text"
+        type="text"
+        name="search"
+        id="search"
+        required
+        placeholder="Vivas"
+      />
+    </div>
+      <button class="button-search" style="margin-top: 30px" type="submit">
+        Buscar
+      </button>
+    </form>
+
+    </br>
+
+    <div class="searchResult">
+    {% if monographys %} {% for monography in monographys %}
+      <div  class="monographyLi">
+        <a>{{monography.title}}</a>
+        <a href="{% url 'edit-monography' pk=monography.id %}"
+        >EDITAR MONOGRAFIA</a>
+        |
+        <a href="{% url 'delete-monography' pk=monography.id %}"
+          >DELETAR MONOGRAFIA</a>
+      </div>
+    {% endfor %} {% else %}
+    <span>Nenhuma Monografia encontrada</span>
+    {% endif %}
+  </div>
+  </body>
+</div>
+</html>

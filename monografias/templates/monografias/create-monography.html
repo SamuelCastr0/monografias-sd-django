@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="../../static/css/style.css" />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Criar Monografia</h1>
+    <form action="{% url 'create-monography' %}" method="post">
+      {% csrf_token %}
+
+      <label for="title">Titulo:</label>
+      <input
+        class="input-text-create"
+        type="text"
+        name="title"
+        id="name"
+        required
+      />
+
+      <label for="author">Monografia Autor:</label>
+      <select name="author">
+        {% for author in authors %}
+        <option value="{{ author.pk }}">{{ author.name }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="advisor">Monografia Orientador:</label>
+      <select name="advisor">
+        {% for advisor in advisors %}
+        <option value="{{ advisor.pk }}">{{ advisor.name }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="co_advisor">Monografia Co Orientador:</label>
+      <select name="co_advisor">
+        {% for co_advisor in co_advisors %}
+        <option value="{{ co_advisor.pk }}">{{ co_advisor.name }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="date">Data:</label>
+      <input
+        class="input-text-create"
+        type="date"
+        name="date"
+        id="date"
+        required
+      />
+      <label for="summary">Resume:</label>
+      <input
+        class="input-text-create"
+        type="text"
+        name="summary"
+        id="summary"
+        required
+      />
+      <label for="key_words">Palavra chave:</label>
+      <input
+        class="input-text-create"
+        type="text"
+        name="key_words"
+        id="key_words"
+        required
+      />
+      <label for="university">Universidade:</label>
+      <input
+        class="input-text-create"
+        type="text"
+        name="university"
+        id="university"
+        required
+      />
+      <label for="course">Class:</label>
+      <input
+        class="input-text-create"
+        type="text"
+        name="course"
+        id="course"
+        required
+      />
+      <label for="monography">Link PDF:</label>
+      <input
+        class="input-text-create"
+        type="text"
+        name="monography"
+        id="monography"
+        required
+      />
+
+      <button class="button-submit" style="margin-top: 30px" type="submit">
+        Criar Monografia
+      </button>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="../../static/css/style.css" />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Criar novo Autor</h1>
+    <form action="{% url 'create-author' %}" method="post">
+      {% csrf_token %}
+      <label for="name">Nome:</label>
+      <input class="input-text" type="text" name="name" id="name" required />
+      <label for="course">Curso:</label>
+      <input
+        class="input-text"
+        type="text"
+        name="course"
+        id="course"
+        required
+      />
+      <label for="university">Universidade:</label>
+      <input
+        class="input-text"
+        type="text"
+        name="university"
+        id="university"
+        required
+      />
+      <label for="email">E-mail:</label>
+      <input class="input-text" type="text" name="email" id="email" required />
+
+      <label for="lattes">Link Lattes:</label>
+      <input
+        class="input-text"
+        type="text"
+        name="lattes"
+        id="lattes"
+        required
+      />
+      <label for="google_scholar">Link Google Scholar:</label>
+      <input
+        class="input-text"
+        type="text"
+        name="google_scholar"
+        id="google_scholar"
+        required
+      />
+      <label for="research_gate">Link Research Gate:</label>
+      <input
+        class="input-text"
+        type="text"
+        name="research_gate"
+        id="research_gate"
+        required
+      />
+      <label for="linkedin">Link Linkedin:</label>
+      <input
+        class="input-text"
+        type="text"
+        name="linkedin"
+        id="linkedin"
+        required
+      />
+      <label for="orcid">link Orcid:</label>
+      <input class="input-text" type="text" name="orcid" id="orcid" required />
+      <label for="github">Link Github:</label>
+      <input
+        class="input-text"
+        type="text"
+        name="github"
+        id="github"
+        required
+      />
+
+      <button class="button-submit" style="margin-top: 30px" type="submit">
+        Create Student
+      </button>
+    </form>
+  </body>
+</html>
