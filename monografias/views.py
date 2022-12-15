@@ -99,8 +99,6 @@ class MonographyView(View):
     co_advisor = CoAdvisor.objects.get(pk=data['co_advisor'])
     author = Author.objects.get(pk=data['author'])
 
-    print(co_advisor)
-
     Monography.objects.create(
       title=data['title'], 
       author=author,

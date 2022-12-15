@@ -1,6 +1,7 @@
-from django.urls import path
+from django.urls import path, include
 
 from . import views
+from .api import advisor, author, coAdvisor, monography
 
 urlpatterns = [
     path('', views.SearchMonographyView.as_view(), name='index'),
@@ -24,4 +25,18 @@ urlpatterns = [
     path('view-monography/', views.MonographysList.as_view(), name='view-monography'),
     path('edit-monography/<int:pk>/', views.MonographyEdit.as_view(), name='edit-monography'),
     path('delete-monography/<int:pk>/', views.MonographyDelete.as_view(), name='delete-monography'),
+
+    path('api/', include([
+        path('author/', author.AuthorAPI.as_view(), name='authors-api'),
+        path('author/<int:id>/', author.AuthorAPI.as_view(), name='authors-api'),
+
+        path('advisor/', advisor.AdvisorAPI.as_view(), name='advisors-api'),
+        path('advisor/<int:id>/', advisor.AdvisorAPI.as_view(), name='advisors-api'),
+
+        path('co-advisor/', coAdvisor.CoAdvisorAPI.as_view(), name='co-advisor-api'),
+        path('co-advisor/<int:id>/', coAdvisor.CoAdvisorAPI.as_view(), name='co-advisor-api'),
+
+        path('monography/', monography.MonographyAPI.as_view(), name='monography-api'),
+        path('monography/<int:id>/', monography.MonographyAPI.as_view(), name='monography-api'),
+    ]))
 ]
