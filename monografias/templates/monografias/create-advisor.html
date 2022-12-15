@@ -11,7 +11,11 @@
   </head>
   <body>
     <h1>Criar novo Orientador</h1>
-    <form action="{% url 'create-advisor' %}" method="post">
+    <form
+      id="create-advisor-form"
+      action="{% url 'api-advisors' %}"
+      method="post"
+    >
       {% csrf_token %}
       <label for="name">Nome:</label>
       <input class="input-text" type="text" name="name" id="name" required />
@@ -65,9 +69,37 @@
       <label for="github">Link Github:</label>
       <input class="input-text" type="url" name="github" id="github" required />
 
-      <button class="button-submit" style="margin-top: 30px" type="submit">
-        Create Author
+      <button
+        onclick="createAdvisor(event)"
+        class="button-submit"
+        style="margin-top: 30px"
+        type="button"
+      >
+        Create Orientador
       </button>
     </form>
   </body>
+  <script>
+    function callCreateAdvisor(item) {
+      debugger;
+      $.ajax({
+        type: "POST",
+        data: item,
+        accepts: {
+          json: "application/json",
+        },
+        delay: 300,
+        url: "{% url 'api-advisors' %}",
+        success: function (data) {
+          return window.location.replace("{% url 'view-advisors' %}");
+        },
+      });
+    }
+
+    function createAdvisor(e) {
+      e.preventDefault();
+      const form = $("#create-advisor-form");
+      callCreateAdvisor(form.serialize());
+    }
+  </script>
 </html>

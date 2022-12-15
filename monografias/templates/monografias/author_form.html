@@ -4,18 +4,59 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.2.min.js"
+      integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA="
+      crossorigin="anonymous"
+    ></script>
+
     <title>Document</title>
   </head>
   <body>
     <h1>Editar Author</h1>
-    <form method="post" action=".">
+    <form
+      id="edit-author"
+      method="put"
+      action="{% url 'api-authors' author.id %}"
+    >
       {% csrf_token %} {{ form.as_p }}
-      <button class="button-submit" style="margin-top: 30px" type="submit">
+      <button
+        onclick="editAuthor(event)"
+        class="button-submit"
+        style="margin-top: 30px"
+        type="button"
+      >
         Editar
       </button>
-      <a href="{% url 'delete-author' pk=author.id %}">
-        <button>Apagar</button>
-      </a>
     </form>
   </body>
+  <script>
+    const url = window.location.pathname;
+    function callEditAuthor(item) {
+      debugger;
+      $.ajax({
+        method: "PUT",
+        contentType: "application/x-www-form-urlencoded",
+        data: JSON.stringify(item),
+        headers: {
+          "X-CSRF-TOKEN": "{{csrf_token}}",
+        },
+        accepts: {
+          json: "application/json",
+        },
+        delay: 300,
+        url: "{% url 'api-authors' author.id %}",
+        success: function (data) {
+          return window.location.replace("{% url 'view-authors' %}");
+        },
+      });
+    }
+
+    function editAuthor(e) {
+      e.preventDefault();
+      const form = $("#edit-author");
+      callEditAuthor(form.serialize());
+    }
+  </script>
 </html>

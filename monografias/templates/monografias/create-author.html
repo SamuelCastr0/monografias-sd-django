@@ -6,12 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="../../static/css/style.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.2.min.js"
+      integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA="
+      crossorigin="anonymous"
+    ></script>
 
     <title>Document</title>
   </head>
   <body>
     <h1>Criar novo Autor</h1>
-    <form action="{% url 'create-author' %}" method="post">
+    <form
+      id="create-author-form"
+      action="{% url 'api-authors' %}"
+      method="post"
+    >
       {% csrf_token %}
       <label for="name">Nome:</label>
       <input class="input-text" type="text" name="name" id="name" required />
@@ -77,9 +86,37 @@
         required
       />
 
-      <button class="button-submit" style="margin-top: 30px" type="submit">
+      <button
+        onclick="createAuthor(event)"
+        class="button-submit"
+        style="margin-top: 30px"
+        type="button"
+      >
         Create Student
       </button>
     </form>
   </body>
+  <script>
+    function callCreateAuthor(item) {
+      debugger;
+      $.ajax({
+        type: "POST",
+        data: item,
+        accepts: {
+          json: "application/json",
+        },
+        delay: 300,
+        url: "{% url 'api-authors' %}",
+        success: function (data) {
+          return window.location.replace("{% url 'view-authors' %}");
+        },
+      });
+    }
+
+    function createAuthor(e) {
+      e.preventDefault();
+      const form = $("#create-author-form");
+      callCreateAuthor(form.serialize());
+    }
+  </script>
 </html>

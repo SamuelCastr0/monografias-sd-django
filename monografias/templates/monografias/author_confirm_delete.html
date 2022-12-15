@@ -4,16 +4,45 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.2.min.js"
+      integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA="
+      crossorigin="anonymous"
+    ></script>
     <title>Document</title>
   </head>
   <body>
     <h1>Apagar Author</h1>
-    Tem certeza que deseja apagar o autor '{{ object.name }}'?
 
-    <form method="post" action=".">
+    <form id="delete-author-form" method="post" action=".">
       {% csrf_token %}
-      <input type="submit" value="Sim, tenho certeza" />
+      <button onclick="deleteAuthor(event)" type="button">
+        Sim, tenho certeza
+      </button>
       <a href="/">Cancelar</a>
     </form>
   </body>
+  <script>
+    function callDeleteAuthor(item) {
+      debugger;
+      $.ajax({
+        type: "DELETE",
+        data: item,
+        accepts: {
+          json: "application/json",
+        },
+        delay: 300,
+        url: "{% url 'api-authors' pk %}",
+        success: function (data) {
+          return window.location.replace("{% url 'view-authors' %}");
+        },
+      });
+    }
+
+    function deleteAuthor(e) {
+      e.preventDefault();
+      const form = $("#delete-author-form");
+      callDeleteAuthor(form.serialize());
+    }
+  </script>
 </html>

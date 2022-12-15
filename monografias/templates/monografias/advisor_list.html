@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="../../static/css/style.css" />
-
+    <script
+      src="https://code.jquery.com/jquery-3.6.2.min.js"
+      integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA="
+      crossorigin="anonymous"
+    ></script>
     <title>Document</title>
   </head>
   <body>
@@ -14,17 +18,38 @@
     <a href="/create-advisor">
       <button>Cadastrar novo Orientador</button>
     </a>
-    <ul>
-      {% for advisor in object_list %}
-      <li>
-        {{ advisor.name }} -
-        <a href="{% url 'edit-advisor' pk=advisor.id %}">EDITAR ORIENTADOR</a> |
-        <a href="{% url 'delete-advisor' pk=advisor.id %}"
-          >DELETAR ORIENTADOR</a
-        >
-        |
-      </li>
-      {% endfor %}
-    </ul>
+    <ul id="list-advisor"></ul>
   </body>
+  <script>
+    function fetchAdvisors() {
+      $.ajax({
+        accepts: {
+          json: "application/json",
+        },
+        delay: 300,
+        url: "{% url 'api-advisors' %}",
+        success: function (data) {
+          return showAdvisors(data);
+        },
+      });
+    }
+    const urlEdit = "{% url 'edit-advisor' %}";
+    const urlDelete = "{% url 'delete-advisor' %}";
+
+    function showAdvisors(data) {
+      const list = document.getElementById("list-advisors");
+      data.forEach((item) => {
+        const advisorItem = document.createElement("li");
+        advisorItem.innerHTML = `
+            ${item.name} -
+            <a href="${urlEdit}${item.id}">EDITAR ORIENTADOR</a> |
+            <a href="${urlDelete}${item.id}">DELETAR ORIENTADOR</a> |
+          `;
+        list.appendChild(advisorItem);
+      });
+    }
+    $(document).ready(function () {
+      fetchAdvisors();
+    });
+  </script>
 </html>

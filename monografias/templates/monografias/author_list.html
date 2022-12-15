@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="../../static/css/style.css" />
-
+    <script
+      src="https://code.jquery.com/jquery-3.6.2.min.js"
+      integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA="
+      crossorigin="anonymous"
+    ></script>
     <title>Document</title>
   </head>
   <body>
@@ -14,14 +18,38 @@
     <a href="/create-author">
       <button>Cadastrar novo autor</button>
     </a>
-    <ul>
-      {% for author in object_list %}
-      <li>
-        {{ author.name }} -
-        <a href="{% url 'edit-author' pk=author.id %}">EDITAR AUTOR</a> |
-        <a href="{% url 'delete-author' pk=author.id %}">DELETAR AUTOR</a> |
-      </li>
-      {% endfor %}
-    </ul>
+    <ul id="list-authors"></ul>
   </body>
+  <script>
+    function fetchAuthors() {
+      $.ajax({
+        accepts: {
+          json: "application/json",
+        },
+        delay: 300,
+        url: "{% url 'api-authors' %}",
+        success: function (data) {
+          return showAuthors(data);
+        },
+      });
+    }
+    const urlEdit = "{% url 'edit-author' %}";
+    const urlDelete = "{% url 'delete-author' %}";
+
+    function showAuthors(data) {
+      const list = document.getElementById("list-authors");
+      data.forEach((item) => {
+        const authorItem = document.createElement("li");
+        authorItem.innerHTML = `
+            ${item.name} -
+            <a href="${urlEdit}${item.id}">EDITAR AUTOR</a> |
+            <a href="${urlDelete}${item.id}">DELETAR AUTOR</a> |
+          `;
+        list.appendChild(authorItem);
+      });
+    }
+    $(document).ready(function () {
+      fetchAuthors();
+    });
+  </script>
 </html>
